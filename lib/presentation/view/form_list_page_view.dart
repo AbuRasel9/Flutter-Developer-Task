@@ -16,14 +16,14 @@ class _FormListPageViewState extends State<FormListPageView> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<FromProvider>().fetchFormData();
+      context.read<FormProvider>().fetchFormData();
 
     },);
   }
 
   @override
   Widget build(BuildContext context) {
-    final provider = context.watch<FromProvider>();
+    final provider = context.watch<FormProvider>();
 final theme=context.theme;
     return Scaffold(
       appBar: AppBar(title: const Text("Form List")),

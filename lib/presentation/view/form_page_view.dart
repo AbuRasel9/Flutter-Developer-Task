@@ -1,7 +1,9 @@
+import 'package:bloc_clean_architecture/presentation/view/submission_view.dart';
 import 'package:bloc_clean_architecture/provider/from_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../config/widget/dynamic_feild_widget.dart';
 import '../../model/formModel/form_model.dart';
 
 class FormPageView extends StatelessWidget {
@@ -10,7 +12,7 @@ class FormPageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = context.read<FromProvider>();
+    final provider = context.read<FormProvider>();
     final formKey = GlobalKey<FormState>();
 
     return Scaffold(

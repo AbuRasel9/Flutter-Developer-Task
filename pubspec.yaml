@@ -37,7 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.6
   provider: ^6.1.2
   json_annotation: ^4.8.1
-  image_picker: ^1.0.7
+  image_picker: ^1.1.2
   path_provider: ^2.1.1
   permission_handler: ^11.3.0
 
@@ -49,6 +49,8 @@ dev_dependencies:
     sdk: flutter
   build_runner:
   json_serializable:
+
+
 
 
   injectable_generator: ^2.1.6

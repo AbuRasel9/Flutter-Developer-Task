@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 
 import '../repository/form_repository.dart';
 
-class FromProvider extends ChangeNotifier{
+class FormProvider extends ChangeNotifier{
   final FormRepository  _repository=FormRepository();
   List<FormModel>_forms=[];
 
@@ -21,7 +21,7 @@ class FromProvider extends ChangeNotifier{
     notifyListeners();
   }
 
-  Map<String,dynamic>getSubmissionDate(){
+  Map<String,dynamic>getSubmissionData(){
     return formValues;
   }
 }
