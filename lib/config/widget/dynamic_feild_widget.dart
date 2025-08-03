@@ -60,7 +60,7 @@ class DynamicFieldWidget extends StatelessWidget {
                     } else if (val == false) {
                       selected.remove(itemValue);
                     }
-                    provider.updateFieldValue(field.key ?? "", selected);
+                    provider.updateFormData(field.key ?? "", selected);
                   },
                 );
               }),
@@ -78,7 +78,7 @@ class DynamicFieldWidget extends StatelessWidget {
             ))
                 .toList(),
             onChanged: (value) =>
-                provider.updateFieldValue(field.key ?? "", value),
+                provider.updateFormData(field.key ?? "", value),
           );
         }
 
@@ -95,7 +95,7 @@ class DynamicFieldWidget extends StatelessWidget {
                 value: opt,
                 groupValue: formValues[field.key],
                 onChanged: (value) =>
-                    provider.updateFieldValue(field.key ?? "", value),
+                    provider.updateFormData(field.key ?? "", value),
               );
             }),
           ],
@@ -105,7 +105,7 @@ class DynamicFieldWidget extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(field.properties?.label ?? "",
+            Text(field.properties.label ?? "",
                 style: const TextStyle(fontWeight: FontWeight.bold)),
             const SizedBox(height: 8),
             ElevatedButton(
@@ -113,7 +113,7 @@ class DynamicFieldWidget extends StatelessWidget {
                 final picker = ImagePicker();
                 final image = await picker.pickImage(source: ImageSource.gallery);
                 if (image != null) {
-                  provider.updateFieldValue(field.key ?? "", image.path);
+                  provider.updateFormData(field.key ?? "", image.path);
                 }
               },
               child: const Text("Pick Image"),

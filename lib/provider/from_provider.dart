@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -34,16 +35,11 @@ class FormProvider with ChangeNotifier {
 
   void setCurrentForm(FormModel form) {
     _currentForm = form;
-    _formData = {};
+    _formData = {}; // Reset form data when a new form is selected
     notifyListeners();
   }
 
   void updateFormData(String key, dynamic value) {
-    _formData[key] = value;
-    notifyListeners();
-  }
-
-  void updateFieldValue(String key, dynamic value) {
     _formData[key] = value;
     notifyListeners();
   }

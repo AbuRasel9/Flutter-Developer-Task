@@ -1,6 +1,6 @@
-import 'package:bloc_clean_architecture/presentation/view/form_list_screen.dart';
 import 'package:bloc_clean_architecture/provider/from_provider.dart';
 import 'package:bloc_clean_architecture/utils/theme/app_theme_data.dart';
+import 'package:bloc_clean_architecture/view/form_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

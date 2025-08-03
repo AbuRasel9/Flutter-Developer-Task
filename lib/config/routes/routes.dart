@@ -1,6 +1,7 @@
 import 'package:bloc_clean_architecture/config/routes/route_name.dart';
-import 'package:bloc_clean_architecture/presentation/view/form_list_screen.dart';
 import 'package:flutter/material.dart';
+
+import '../../view/form_list_screen.dart';
 
 
 class Routes {
