@@ -1,26 +1,28 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:bloc_clean_architecture/provider/from_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
-import '../../model/formModel/feild.dart';
+import '../../model/formModel/dynamic_form_feild_model.dart';
+import '../../model/formModel/form_feild.dart';
+import '../../provider/from_provider.dart';
 
 class DynamicFieldWidget extends StatelessWidget {
-  final Field field;
+  final DynamicFormField field;
 
   const DynamicFieldWidget({super.key, required this.field});
 
   @override
   Widget build(BuildContext context) {
     final provider = context.read<FormProvider>();
+    final formValues = provider.formValues;
 
-    switch (field.id) {
+    switch (field.id ?? 0) {
       case 1: // TextField
         return TextFormField(
-          decoration: InputDecoration(labelText: field.properties?.label ?? ""),
+          decoration: InputDecoration(labelText: field.properties.label ?? ""),
           validator: (value) {
             if ((value ?? '').length < (field.properties?.minLength ?? 0)) {
               return "Minimum ${field.properties?.minLength ?? 0} characters required";
@@ -28,28 +30,26 @@ class DynamicFieldWidget extends StatelessWidget {
             return null;
           },
           onChanged: (value) =>
-              provider.updateFeildValue(field.key ?? "", value),
+              provider.updateFormData(field.key ?? "", value),
         );
 
-      case 2: // DropDown or Checkbox
+      case 2: // Dropdown or Checkbox
         final itemsJson = field.properties?.listItems ?? "";
         List<Map<String, dynamic>> list = [];
         try {
           list = List<Map<String, dynamic>>.from(jsonDecode(itemsJson));
         } catch (e) {
-          // error decoding JSON
-          return Text("Invalid list data");
+          return const Text("Invalid list data");
         }
 
         if (field.properties?.multiSelect ?? false) {
+          final selected = List<int>.from(formValues[field.key] ?? []);
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(field.properties?.label ?? "",
                   style: const TextStyle(fontWeight: FontWeight.bold)),
               ...list.map((item) {
-                final selected =
-                List<int>.from(provider.formValues[field.key] ?? []);
                 final itemValue = item['value'];
                 return CheckboxListTile(
                   title: Text(item['name']),
@@ -60,7 +60,7 @@ class DynamicFieldWidget extends StatelessWidget {
                     } else if (val == false) {
                       selected.remove(itemValue);
                     }
-                    provider.updateFeildValue(field.key ?? "", selected);
+                    provider.updateFieldValue(field.key ?? "", selected);
                   },
                 );
               }),
@@ -70,6 +70,7 @@ class DynamicFieldWidget extends StatelessWidget {
           return DropdownButtonFormField(
             decoration:
             InputDecoration(labelText: field.properties?.label ?? ""),
+            value: formValues[field.key],
             items: list
                 .map((e) => DropdownMenuItem(
               value: e['value'],
@@ -77,7 +78,7 @@ class DynamicFieldWidget extends StatelessWidget {
             ))
                 .toList(),
             onChanged: (value) =>
-                provider.updateFeildValue(field.key ?? "", value),
+                provider.updateFieldValue(field.key ?? "", value),
           );
         }
 
@@ -92,15 +93,15 @@ class DynamicFieldWidget extends StatelessWidget {
               return RadioListTile(
                 title: Text(opt),
                 value: opt,
-                groupValue: provider.formValues[field.key],
+                groupValue: formValues[field.key],
                 onChanged: (value) =>
-                    provider.updateFeildValue(field.key ?? "", value),
+                    provider.updateFieldValue(field.key ?? "", value),
               );
             }),
           ],
         );
 
-      case 4: // Image upload (camera/gallery)
+      case 4: // Image upload
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -112,15 +113,15 @@ class DynamicFieldWidget extends StatelessWidget {
                 final picker = ImagePicker();
                 final image = await picker.pickImage(source: ImageSource.gallery);
                 if (image != null) {
-                  provider.updateFeildValue(field.key ?? "", image.path);
+                  provider.updateFieldValue(field.key ?? "", image.path);
                 }
               },
               child: const Text("Pick Image"),
             ),
             const SizedBox(height: 10),
-            if ((provider.formValues[field.key] ?? "").toString().isNotEmpty)
+            if ((formValues[field.key] ?? "").toString().isNotEmpty)
               Image.file(
-                File(provider.formValues[field.key]),
+                File(formValues[field.key]),
                 width: 100,
                 height: 100,
                 fit: BoxFit.cover,

@@ -1,5 +1,7 @@
 class RouteName{
-  static const String formListpageView="for_list_page_view";
+  static const String formListScreen="formListScreen";
+  static const String formScreen="formScreen";
+  static const String submissionScreen="submissionScreen";
 
 
 }

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import '../model/formModel/form_model.dart';
 
 class FormProvider with ChangeNotifier {
@@ -11,7 +12,7 @@ class FormProvider with ChangeNotifier {
 
   List<FormModel> get forms => _forms;
   FormModel? get currentForm => _currentForm;
-  Map<String, dynamic> get formData => _formData;
+  Map<String, dynamic> get formValues => _formData;
   Map<String, dynamic> get submissionData => _submissionData;
 
   Future<void> loadForms() async {
@@ -38,6 +39,11 @@ class FormProvider with ChangeNotifier {
   }
 
   void updateFormData(String key, dynamic value) {
+    _formData[key] = value;
+    notifyListeners();
+  }
+
+  void updateFieldValue(String key, dynamic value) {
     _formData[key] = value;
     notifyListeners();
   }

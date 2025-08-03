@@ -1,11 +1,18 @@
+import 'package:bloc_clean_architecture/presentation/view/form_list_screen.dart';
 import 'package:bloc_clean_architecture/provider/from_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'config/routes/route_name.dart';
-import 'config/routes/routes.dart';
+
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => FormProvider()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -13,15 +20,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(providers: [
-      ChangeNotifierProvider(create: (_) => FormProvider()),
-    ],
-    child: MaterialApp(
+    return MaterialApp(
+      title: 'Dynamic Forms',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const FormListScreen(),
       debugShowCheckedModeBanner: false,
-      initialRoute: RouteName.formListpageView,
-      onGenerateRoute: Routes.generateRoute,
-
-    ),
     );
   }
 }

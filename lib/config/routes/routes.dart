@@ -1,14 +1,22 @@
 import 'package:bloc_clean_architecture/config/routes/route_name.dart';
-import 'package:bloc_clean_architecture/presentation/view/form_list_page_view.dart';
+import 'package:bloc_clean_architecture/presentation/view/form_list_screen.dart';
 import 'package:flutter/material.dart';
 
 
 class Routes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case RouteName.formListpageView:
+      case RouteName.formListScreen:
         return MaterialPageRoute(
-          builder: (context) => const FormListPageView(),
+          builder: (context) => const FormListScreen(),
+        );
+        case RouteName.formScreen:
+        return MaterialPageRoute(
+          builder: (context) => const FormListScreen(),
+        );
+        case RouteName.submissionScreen:
+        return MaterialPageRoute(
+          builder: (context) => const FormListScreen(),
         );
 
       default:
