@@ -1,17 +1,12 @@
 import 'package:bloc_clean_architecture/presentation/view/form_list_screen.dart';
 import 'package:bloc_clean_architecture/provider/from_provider.dart';
+import 'package:bloc_clean_architecture/utils/theme/app_theme_data.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-
 void main() {
   runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => FormProvider()),
-      ],
-      child: const MyApp(),
-    ),
+    const MyApp(),
   );
 }
 
@@ -20,13 +15,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Dynamic Forms',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => FormProvider()),
+      ],
+      child: MaterialApp(
+        title: 'Dynamic Forms',
+        theme: AppThemeData.lightThemeData,
+        // Apply Light Theme
+        themeMode: ThemeMode.light,
+        // Automatically use system's theme setting
+        home: const FormListScreen(),
+        debugShowCheckedModeBanner: false,
       ),
-      home: const FormListScreen(),
-      debugShowCheckedModeBanner: false,
     );
   }
 }
